@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Моделирование приготовления ЛКМ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Моделирование приготовления ЛКМ</h1>
+  <p>Лабораторная работа</p>
+</header>
+
+<main>
+  <section>
+    <h2>1. Технологическая схема</h2>
+    <div class="scheme">
+      <div>Подготовка сырья</div><span>→</span>
+      <div>Смешивание</div><span>→</span>
+      <div>Контроль качества</div><span>→</span>
+      <div>Готовый материал</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Схема смесителя</h2>
+    <div class="mixer">
+      <div class="motor">Двигатель</div>
+      <div class="shaft"></div>
+      <div class="tank">
+        <div class="blade"></div>
+        <div class="liquid"></div>
+      </div>
+    </div>
+    <p>Двигатель вращает вал и лопасти, которые перемешивают компоненты в ёмкости.</p>
+  </section>
+
+  <section>
+    <h2>3. Параметры процесса</h2>
+
+    <label>Объём: <output id="vVal">10</output> л</label>
+    <input id="v" type="range" min="5" max="50" value="10">
+
+    <label>Концентрация: <output id="cVal">20</output>%</label>
+    <input id="c" type="range" min="5" max="50" value="20">
+
+    <label>Скорость: <output id="nVal">300</output> об/мин</label>
+    <input id="n" type="range" min="100" max="600" step="10" value="300">
+
+    <label>Время: <output id="tVal">8</output> мин</label>
+    <input id="t" type="range" min="1" max="30" value="8">
+
+    <h3>Однородность: <output id="hVal">—</output>%</h3>
+    <div class="progress"><div id="bar"></div></div>
+    <p id="status"></p>
+
+    <button id="optimize">Найти оптимальную скорость</button>
+    <p id="answer"></p>
+    <button id="apply" hidden>Применить параметры</button>
+    <button id="reset">Сбросить</button>
+  </section>
+
+  <section>
+    <h2>4. Формулы расчёта</h2>
+
+    <p><b>Характеристическое время смешивания:</b></p>
+    <p class="formula">T = 8 · (V / 10) · (C / 20) · (300 / N)</p>
+
+    <p><b>Однородность смеси:</b></p>
+    <p class="formula">H = 100 · (1 − e<sup>−t/T</sup>)</p>
+
+    <p><b>Время достижения заданной однородности:</b></p>
+    <p class="formula">t = −T · ln(1 − H / 100)</p>
+
+    <p><b>Обозначения:</b></p>
+    <ul>
+      <li>T — характеристическое время, мин.</li>
+      <li>V — объём смеси, л.</li>
+      <li>C — концентрация, %.</li>
+      <li>N — скорость мешалки, об/мин.</li>
+      <li>t — время смешивания, мин.</li>
+      <li>H — однородность, %.</li>
+      <li>e — основание натурального логарифма, ln — натуральный логарифм.</li>
+    </ul>
+
+    <p class="note">Формулы являются упрощённой учебной моделью и не заменяют реальные производственные испытания.</p>
+  </section>
+
+  <section>
+    <h2>5. Графики однородности</h2>
+    <h3>Однородность от времени</h3>
+    <canvas id="timeGraph" width="600" height="250"></canvas>
+    <h3>Однородность от скорости</h3>
+    <canvas id="speedGraph" width="600" height="250"></canvas>
+    <p>Оранжевая линия показывает целевой уровень 90%, фиолетовая — расчётную зависимость.</p>
+  </section>
+
+  <section>
+    <h2>6. Влияние параметров</h2>
+    <div class="scheme">
+      <div>Объём</div>
+      <div>Концентрация</div>
+      <div>Скорость</div>
+      <div>Время</div>
+    </div>
+    <p class="arrow">↓</p>
+    <div class="result-box">Математическая модель → Однородность смеси</div>
+  </section>
+
+  <section>
+    <h2>7. Алгоритм работы</h2>
+    <ol>
+      <li>Задать параметры смеси.</li>
+      <li>Рассчитать характеристическое время.</li>
+      <li>Вычислить однородность.</li>
+      <li>Изучить графики.</li>
+      <li>Подобрать подходящую скорость.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>8. Контрольные вопросы</h2>
+    <details>
+      <summary>Для чего смешивают компоненты?</summary>
+      <p>Чтобы равномерно распределить компоненты смеси.</p>
+    </details>
+    <details>
+      <summary>Как влияет время?</summary>
+      <p>В учебной модели увеличение времени повышает однородность.</p>
+    </details>
+    <details>
+      <summary>Как влияет скорость мешалки?</summary>
+      <p>В модели повышение скорости ускоряет смешивание.</p>
+    </details>
+    <details>
+      <summary>Что показывают графики?</summary>
+      <p>Зависимость однородности от времени и скорости мешалки.</p>
+    </details>
+    <details>
+      <summary>Можно ли использовать модель на производстве?</summary>
+      <p>Для реального производства необходимы экспериментальные данные и проверка модели.</p>
+    </details>
+  </section>
+
+  <section>
+    <h2>9. Вывод</h2>
+    <p>В работе рассмотрена модель приготовления лакокрасочных материалов. Изучено влияние объёма, концентрации, скорости и времени на расчётную однородность. Графики помогают сравнивать режимы смешивания. Модель предназначена для учебной демонстрации.</p>
+  </section>
+</main>
+
+<footer>Лабораторная работа по моделированию процесса ЛКМ</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+let recommended = null;
+
+// Расчёт характеристического времени
+function calcT(v, c, n) {
+  return 8 * (v / 10) * (c / 20) * (300 / n);
+}
+
+// Расчёт однородности
+function H(v, c, n, t) {
+  return 100 * (1 - Math.exp(-t / calcT(v, c, n)));
+}
+
+// Расчёт времени достижения 90%
+function targetTime(v, c, n) {
+  return -calcT(v, c, n) * Math.log(0.1);
+}
+
+// Построение графика
+function graph(id, max, current, fn) {
+  const canvas = $(id), ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, 600, 250);
+  ctx.strokeStyle = "#999";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(40, 15);
+  ctx.lineTo(40, 215);
+  ctx.lineTo(580, 215);
+  ctx.stroke();
+
+  ctx.fillStyle = "#333";
+  ctx.fillText("Однородность, %", 5, 12);
+  ctx.fillText("0", 25, 220);
+  ctx.fillText("100", 5, 30);
+  ctx.fillText(String(max), 555, 235);
+
+  ctx.setLineDash([5, 5]);
+  ctx.strokeStyle = "#e0a23b";
+  ctx.beginPath();
+  ctx.moveTo(40, 35);
+  ctx.lineTo(580, 35);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.strokeStyle = "#6a54d6";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+
+  for (let i = 0; i <= 200; i++) {
+    const x = max * i / 200;
+    const y = Math.max(0, Math.min(100, fn(x)));
+    const px = 40 + x / max * 540;
+    const py = 215 - y / 100 * 180;
+
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+
+  ctx.stroke();
+
+  ctx.fillStyle = "#df6b54";
+  ctx.beginPath();
+  ctx.arc(40 + current / max * 540, 215 - fn(current) / 100 * 180, 5, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// Обновление расчётов и графиков
+function update() {
+  const v = +$("v").value, c = +$("c").value;
+  const n = +$("n").value, t = +$("t").value;
+
+  $("vVal").textContent = v;
+  $("cVal").textContent = c;
+  $("nVal").textContent = n;
+  $("tVal").textContent = t;
+
+  const h = H(v, c, n, t);
+  $("hVal").textContent = h.toFixed(1);
+  $("bar").style.width = h + "%";
+  $("status").textContent = h >= 90
+    ? "Целевой уровень 90% достигнут."
+    : "Однородность ниже целевого уровня 90%.";
+
+  graph("timeGraph", 30, t, x => H(v, c, n, x));
+  graph("speedGraph", 600, n, x => H(v, c, Math.max(1, x), t));
+
+  recommended = null;
+  $("answer").textContent = "";
+  $("apply").hidden = true;
+}
+
+// Поиск минимальной подходящей скорости
+$("optimize").onclick = () => {
+  const v = +$("v").value, c = +$("c").value;
+  recommended = null;
+
+  for (let n = 100; n <= 600; n += 10) {
+    const needed = targetTime(v, c, n);
+
+    if (needed <= 30) {
+      recommended = {
+        n: n,
+        time: Math.max(1, Math.ceil(needed))
+      };
+      break;
+    }
+  }
+
+  $("answer").textContent = recommended
+    ? `Подходящий режим: ${recommended.n} об/мин, ${recommended.time} мин.`
+    : "Подходящий режим за 30 минут не найден.";
+
+  $("apply").hidden = !recommended;
+};
+
+// Применение найденных параметров
+$("apply").onclick = () => {
+  if (!recommended) return;
+  $("n").value = recommended.n;
+  $("t").value = recommended.time;
+  update();
+};
+
+// Сброс параметров
+$("reset").onclick = () => {
+  $("v").value = 10;
+  $("c").value = 20;
+  $("n").value = 300;
+  $("t").value = 8;
+  update();
+};
+
+["v", "c", "n", "t"].forEach(id =>
+  $(id).addEventListener("input", update)
+);
+
+window.addEventListener("resize", update);
+update();
+</script>
+</body>
+</html>
